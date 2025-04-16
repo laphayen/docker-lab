@@ -1,0 +1,17 @@
+services:
+  mysql:
+    container_name: test_mysql_without_network
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=testdb
+    ports:
+      - "3308:3306"
+
+  backend:
+    container_name: test_backend_without_network
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: ["sh", "-c", "ping -c 4 mysql"]
+    
