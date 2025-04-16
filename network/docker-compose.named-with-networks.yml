@@ -1,0 +1,24 @@
+services:
+  mysql:
+    container_name: test_mysql_with_network
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=testdb
+    ports:
+      - "3307:3306"
+    networks:
+      - my_network
+
+  backend:
+    container_name: test_backend_with_network
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
+    
